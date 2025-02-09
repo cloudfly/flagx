@@ -69,7 +69,6 @@ func Parse() {
 // ParseFlagSet parses the given args into the given fs.
 func ParseFlagSet(fs *flag.FlagSet, args []string) {
 	if err := fs.Parse(args); err != nil {
-		// Do not use lib/logger here, since it is uninitialized yet.
 		log.Fatalf("cannot parse flags %q: %s", args, err)
 	}
 

@@ -50,6 +50,14 @@ func NewArrayBytes(name, description string) *ArrayBytes {
 	return &a
 }
 
+// NewArrayBytes returns new ArrayText with the given name and description.
+func NewArrayText(name, description string) *ArrayText {
+	description += "\nSupports `array` of values separated by comma or specified via multiple flags." + envHelp(name)
+	var a ArrayText
+	flag.Var(&a, name, description)
+	return &a
+}
+
 // ArrayString is a flag that holds an array of strings.
 //
 // It may be set either by specifying multiple flags with the given name
