@@ -1,6 +1,7 @@
 package flagx
 
 import (
+	"encoding/base64"
 	"flag"
 	"fmt"
 	"strconv"
@@ -370,4 +371,30 @@ func (a *ArrayBytes) GetOptionalArgOrDefault(argIdx int, defaultValue int64) int
 		return x[0].N
 	}
 	return defaultValue
+}
+
+// ArrayText is a flag that used to hold multiple Text values.
+type ArrayText []*Text
+
+// String implements flag.Value interface
+func (a *ArrayText) String() string {
+	x := *a
+	formattedBytes := make([]string, len(x))
+	for i, v := range x {
+		formattedBytes[i] = base64.StdEncoding.EncodeToString([]byte(v.Value))
+	}
+	return strings.Join(formattedBytes, "\n")
+}
+
+// Set implements flag.Value interface
+func (a *ArrayText) Set(value string) error {
+	values := parseArrayValues(value)
+	for _, v := range values {
+		r, err := base64.StdEncoding.DecodeString(v)
+		if err != nil {
+			return err
+		}
+		*a = append(*a, &Text{Value: string(r)})
+	}
+	return nil
 }
