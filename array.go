@@ -381,6 +381,14 @@ func (a *ArrayBytes) GetOptionalArgOrDefault(argIdx int, defaultValue int64) int
 	return defaultValue
 }
 
+func (a *ArrayBytes) Ints() []int {
+	data := make([]int, 0, len(*a))
+	for _, v := range *a {
+		data = append(data, v.IntN())
+	}
+	return data
+}
+
 // ArrayText is a flag that used to hold multiple Text values.
 type ArrayText []*Text
 
@@ -405,4 +413,12 @@ func (a *ArrayText) Set(value string) error {
 		*a = append(*a, &Text{Value: string(r)})
 	}
 	return nil
+}
+
+func (a *ArrayText) Strings() []string {
+	var dst []string
+	for _, v := range *a {
+		dst = append(dst, v.Value)
+	}
+	return dst
 }
