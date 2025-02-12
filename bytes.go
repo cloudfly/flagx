@@ -16,6 +16,7 @@ func NewBytes(name string, defaultValue int64, description string) *Bytes {
 		valueString: fmt.Sprintf("%d", defaultValue),
 	}
 	flag.Var(&b, name, description)
+	flagTypes[name] = &b
 	return &b
 }
 

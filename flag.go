@@ -11,31 +11,42 @@ import (
 
 var (
 	envPrefix = flag.String("env.prefix", "", "Name prefix of environment variables that interact with flags.")
+	flagTypes = map[string]any{}
 )
 
 // NewBool creates a new bool flag.
 func NewBool(name string, value bool, usage string) *bool {
-	return flag.Bool(name, value, usage+envHelp(name))
+	b := flag.Bool(name, value, usage+envHelp(name))
+	flagTypes[name] = b
+	return b
 }
 
 // NewString creates a new string flag.
 func NewString(name string, value string, usage string) *string {
-	return flag.String(name, value, usage+envHelp(name))
+	s := flag.String(name, value, usage+envHelp(name))
+	flagTypes[name] = s
+	return s
 }
 
 // NewInt creates a new int flag.
 func NewInt(name string, value int, usage string) *int {
-	return flag.Int(name, value, usage+envHelp(name))
+	i := flag.Int(name, value, usage+envHelp(name))
+	flagTypes[name] = i
+	return i
 }
 
 // NewInt64 creates a new int64 flag.
 func NewInt64(name string, value int64, usage string) *int64 {
-	return flag.Int64(name, value, usage+envHelp(name))
+	i64 := flag.Int64(name, value, usage+envHelp(name))
+	flagTypes[name] = i64
+	return i64
 }
 
 // NewFloat creates a new float64 flag.
 func NewFloat(name string, value float64, usage string) *float64 {
-	return flag.Float64(name, value, usage+envHelp(name))
+	f := flag.Float64(name, value, usage+envHelp(name))
+	flagTypes[name] = f
+	return f
 }
 
 // WriteFlags writes all the explicitly set flags to w.
@@ -45,9 +56,27 @@ func WriteFlags(w io.Writer) {
 	})
 }
 
-// Visit all the flag name and values
+// Lookup a flag by name. the second return value is the real flag pointer which is returned by flagx.NewXXX.
+// nil, nil will be returned if the flag is not found.
+func Lookup(name string) (*flag.Flag, any) {
+	return flag.Lookup(name), flagTypes[name]
+}
+
+// Visit the flags name and values set in command line
 func Visit(fn func(string, string)) {
 	flag.Visit(func(f *flag.Flag) {
+		lname := strings.ToLower(f.Name)
+		value := f.Value.String()
+		if IsSecretFlag(lname) {
+			value = "secret"
+		}
+		fn(lname, value)
+	})
+}
+
+// Visit all the flag name and values, including those not set in command line.
+func VisitAll(fn func(string, string)) {
+	flag.VisitAll(func(f *flag.Flag) {
 		lname := strings.ToLower(f.Name)
 		value := f.Value.String()
 		if IsSecretFlag(lname) {

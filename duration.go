@@ -19,6 +19,7 @@ func NewDuration(name string, defaultValue string, description string) *Duration
 		panic(fmt.Sprintf("BUG: can not parse default value %s for flag %s", defaultValue, name))
 	}
 	flag.Var(d, name, description)
+	flagTypes[name] = d
 	return d
 }
 

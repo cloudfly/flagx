@@ -30,5 +30,6 @@ func NewText(name string, value string, description string) *Text {
 	t := Text{Value: value}
 	description += "\nThe flag value shoud be a base64-encoded string, it will be decoded before assignment" + envHelp(name)
 	flag.TextVar(&t, name, &t, description+envHelp(name))
+	flagTypes[name] = &t
 	return &t
 }

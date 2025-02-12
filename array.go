@@ -14,6 +14,7 @@ func NewArrayString(name, description string) *ArrayString {
 	description += "\nSupports an `array` of values separated by comma or specified via multiple flags." + envHelp(name)
 	var a ArrayString
 	flag.Var(&a, name, description)
+	flagTypes[name] = &a
 	return &a
 }
 
@@ -22,6 +23,7 @@ func NewArrayDuration(name, description string) *ArrayDuration {
 	description += "\nSupports `array` of values separated by comma or specified via multiple flags." + envHelp(name)
 	var a ArrayDuration
 	flag.Var(&a, name, description)
+	flagTypes[name] = &a
 	return &a
 }
 
@@ -30,6 +32,7 @@ func NewArrayBool(name, description string) *ArrayBool {
 	description += "\nSupports `array` of values separated by comma or specified via multiple flags." + envHelp(name)
 	var a ArrayBool
 	flag.Var(&a, name, description)
+	flagTypes[name] = &a
 	return &a
 }
 
@@ -38,6 +41,7 @@ func NewArrayInt(name, description string) *ArrayInt {
 	description += "\nSupports `array` of values separated by comma or specified via multiple flags." + envHelp(name)
 	var a ArrayInt
 	flag.Var(&a, name, description)
+	flagTypes[name] = &a
 	return &a
 }
 
@@ -47,6 +51,7 @@ func NewArrayBytes(name, description string) *ArrayBytes {
 	description += "\nSupports `array` of values separated by comma or specified via multiple flags." + envHelp(name)
 	var a ArrayBytes
 	flag.Var(&a, name, description)
+	flagTypes[name] = &a
 	return &a
 }
 
@@ -55,6 +60,7 @@ func NewArrayText(name, description string) *ArrayText {
 	description += "\nSupports `array` of values separated by comma or specified via multiple flags." + envHelp(name)
 	var a ArrayText
 	flag.Var(&a, name, description)
+	flagTypes[name] = &a
 	return &a
 }
 
