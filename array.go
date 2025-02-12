@@ -10,57 +10,63 @@ import (
 )
 
 // NewArrayString returns new ArrayString with the given name and description.
-func NewArrayString(name, description string) *ArrayString {
-	description += "\nSupports an `array` of values separated by comma or specified via multiple flags." + envHelp(name)
+func NewArrayString(name, usage string, opts ...Option) *ArrayString {
+	x := newFlag(name, opts)
+	usage = x.usage(name, nil, usage) + "\nSupports an `array` of values separated by comma or specified via multiple flags."
 	var a ArrayString
-	flag.Var(&a, name, description)
-	flagTypes[name] = &a
+	flag.Var(&a, name, usage)
+	x.target = &a
 	return &a
 }
 
 // NewArrayDuration returns new ArrayDuration with the given name and description.
-func NewArrayDuration(name, description string) *ArrayDuration {
-	description += "\nSupports `array` of values separated by comma or specified via multiple flags." + envHelp(name)
+func NewArrayDuration(name, usage string, opts ...Option) *ArrayDuration {
+	x := newFlag(name, opts)
+	usage = x.usage(name, nil, usage) + "\nSupports `array` of values separated by comma or specified via multiple flags."
 	var a ArrayDuration
-	flag.Var(&a, name, description)
-	flagTypes[name] = &a
+	flag.Var(&a, name, usage)
+	x.target = &a
 	return &a
 }
 
 // NewArrayBool returns new ArrayBool with the given name and description.
-func NewArrayBool(name, description string) *ArrayBool {
-	description += "\nSupports `array` of values separated by comma or specified via multiple flags." + envHelp(name)
+func NewArrayBool(name, usage string, opts ...Option) *ArrayBool {
+	x := newFlag(name, opts)
+	usage = x.usage(name, nil, usage) + "\nSupports `array` of values separated by comma or specified via multiple flags."
 	var a ArrayBool
-	flag.Var(&a, name, description)
-	flagTypes[name] = &a
+	flag.Var(&a, name, usage)
+	x.target = &a
 	return &a
 }
 
 // NewArrayInt returns new ArrayInt with the given name and description.
-func NewArrayInt(name, description string) *ArrayInt {
-	description += "\nSupports `array` of values separated by comma or specified via multiple flags." + envHelp(name)
+func NewArrayInt(name, usage string, opts ...Option) *ArrayInt {
+	x := newFlag(name, opts)
+	usage = x.usage(name, nil, usage) + "\nSupports `array` of values separated by comma or specified via multiple flags."
 	var a ArrayInt
-	flag.Var(&a, name, description)
-	flagTypes[name] = &a
+	flag.Var(&a, name, usage)
+	x.target = &a
 	return &a
 }
 
 // NewArrayBytes returns new ArrayBytes with the given name and description.
-func NewArrayBytes(name, description string) *ArrayBytes {
-	description += "\nSupports the following optional suffixes for size values: KB, MB, GB, TB, KiB, MiB, GiB, TiB."
-	description += "\nSupports `array` of values separated by comma or specified via multiple flags." + envHelp(name)
+func NewArrayBytes(name, usage string, opts ...Option) *ArrayBytes {
+	x := newFlag(name, opts)
+	usage = x.usage(name, nil, usage) + "\nSupports the following optional suffixes for size values: KB, MB, GB, TB, KiB, MiB, GiB, TiB."
+	usage += "\nSupports `array` of values separated by comma or specified via multiple flags."
 	var a ArrayBytes
-	flag.Var(&a, name, description)
-	flagTypes[name] = &a
+	flag.Var(&a, name, usage)
+	x.target = &a
 	return &a
 }
 
 // NewArrayBytes returns new ArrayText with the given name and description.
-func NewArrayText(name, description string) *ArrayText {
-	description += "\nSupports `array` of values separated by comma or specified via multiple flags." + envHelp(name)
+func NewArrayText(name, usage string, opts ...Option) *ArrayText {
+	x := newFlag(name, opts)
+	usage = x.usage(name, nil, usage) + "\nSupports `array` of values separated by comma or specified via multiple flags."
 	var a ArrayText
-	flag.Var(&a, name, description)
-	flagTypes[name] = &a
+	flag.Var(&a, name, usage)
+	x.target = &a
 	return &a
 }
 

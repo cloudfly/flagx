@@ -11,41 +11,81 @@ import (
 
 var (
 	envPrefix = flag.String("env.prefix", "", "Name prefix of environment variables that interact with flags.")
-	flagTypes = map[string]any{}
+	flags     = map[string]*flagx{}
 )
 
+type flagx struct {
+	target   any
+	env      string
+	required bool
+}
+
+func (f *flagx) apply(opts []Option) *flagx {
+	for _, opt := range opts {
+		opt(f)
+	}
+	return f
+}
+
+func (f *flagx) usage(name string, value any, description string) string {
+	usage := description
+	if f.env != "" {
+		usage += fmt.Sprintf(" (env: %s)", f.env)
+	} else {
+		usage += fmt.Sprintf(" (env: %s)", getEnvFlagName(name))
+	}
+	if f.required {
+		usage += " (required)"
+	}
+	if value != nil {
+		usage += fmt.Sprintf(" (default: %v)", value)
+	}
+	return usage
+}
+
+func newFlag(name string, opts []Option) *flagx {
+	x := (&flagx{}).apply(opts)
+	flags[name] = x
+	return x
+}
+
 // NewBool creates a new bool flag.
-func NewBool(name string, value bool, usage string) *bool {
-	b := flag.Bool(name, value, usage+envHelp(name))
-	flagTypes[name] = b
+func NewBool(name string, value bool, usage string, opts ...Option) *bool {
+	x := newFlag(name, opts)
+	b := flag.Bool(name, value, x.usage(name, value, usage))
+	x.target = b
 	return b
 }
 
 // NewString creates a new string flag.
-func NewString(name string, value string, usage string) *string {
-	s := flag.String(name, value, usage+envHelp(name))
-	flagTypes[name] = s
+func NewString(name string, value string, usage string, opts ...Option) *string {
+	x := newFlag(name, opts)
+	s := flag.String(name, value, x.usage(name, value, usage))
+	x.target = s
 	return s
 }
 
 // NewInt creates a new int flag.
-func NewInt(name string, value int, usage string) *int {
-	i := flag.Int(name, value, usage+envHelp(name))
-	flagTypes[name] = i
+func NewInt(name string, value int, usage string, opts ...Option) *int {
+	x := newFlag(name, opts)
+	i := flag.Int(name, value, x.usage(name, value, usage))
+	x.target = i
 	return i
 }
 
 // NewInt64 creates a new int64 flag.
-func NewInt64(name string, value int64, usage string) *int64 {
-	i64 := flag.Int64(name, value, usage+envHelp(name))
-	flagTypes[name] = i64
+func NewInt64(name string, value int64, usage string, opts ...Option) *int64 {
+	x := newFlag(name, opts)
+	i64 := flag.Int64(name, value, x.usage(name, value, usage))
+	x.target = i64
 	return i64
 }
 
 // NewFloat creates a new float64 flag.
-func NewFloat(name string, value float64, usage string) *float64 {
-	f := flag.Float64(name, value, usage+envHelp(name))
-	flagTypes[name] = f
+func NewFloat(name string, value float64, usage string, opts ...Option) *float64 {
+	x := newFlag(name, opts)
+	f := flag.Float64(name, value, x.usage(name, value, usage))
+	x.target = f
 	return f
 }
 
@@ -59,7 +99,7 @@ func WriteFlags(w io.Writer) {
 // Lookup a flag by name. the second return value is the real flag pointer which is returned by flagx.NewXXX.
 // nil, nil will be returned if the flag is not found.
 func Lookup(name string) (*flag.Flag, any) {
-	return flag.Lookup(name), flagTypes[name]
+	return flag.Lookup(name), flags[name].target
 }
 
 // Visit the flags name and values set in command line
@@ -107,23 +147,24 @@ func ParseFlagSet(fs *flag.FlagSet, args []string) {
 		flagsSet[f.Name] = true
 	})
 
-	if *envPrefix != "" {
-		// Obtain the remaining flag values from environment vars.
-		fs.VisitAll(func(f *flag.Flag) {
-			if flagsSet[f.Name] {
-				// The flag is explicitly set via command-line.
-				return
+	// Obtain the remaining flag values from environment vars.
+	fs.VisitAll(func(f *flag.Flag) {
+		if flagsSet[f.Name] {
+			// The flag is explicitly set via command-line.
+			return
+		}
+		// Get flag value from environment var.
+		fname := getEnvFlagName(f.Name)
+		if v := os.Getenv(fname); v != "" {
+			if err := fs.Set(f.Name, v); err != nil {
+				// Do not use lib/logger here, since it is uninitialized yet.
+				log.Fatalf("cannot set flag %s to %q, which is read from env var %q: %s", f.Name, v, fname, err)
 			}
-			// Get flag value from environment var.
-			fname := getEnvFlagName(f.Name)
-			if v := os.Getenv(fname); v != "" {
-				if err := fs.Set(f.Name, v); err != nil {
-					// Do not use lib/logger here, since it is uninitialized yet.
-					log.Fatalf("cannot set flag %s to %q, which is read from env var %q: %s", f.Name, v, fname, err)
-				}
-			}
-		})
-	}
+		} else if fx, ok := flags[f.Name]; ok && fx.required {
+			fmt.Fprintf(os.Stderr, "argument %q is required, run command with --%s or set via %s environment variable\n", f.Name, f.Name, getEnvFlagName(f.Name))
+			os.Exit(1)
+		}
+	})
 }
 
 func getEnvFlagName(s string) string {
@@ -132,9 +173,15 @@ func getEnvFlagName(s string) string {
 	return strings.ToUpper(*envPrefix + strings.ReplaceAll(s, ".", "_"))
 }
 
-func envHelp(s string) string {
-	if *envPrefix == "" {
-		return ""
-	}
-	return fmt.Sprintf("(env: %s)", getEnvFlagName(s))
+// Option for flags
+type Option func(*flagx)
+
+// Env disable flagx from reading environment variable for flag.
+func Env(env string) Option {
+	return func(f *flagx) { f.env = env }
+}
+
+// Required mark the flag MUST BE set via command line or environment
+func Required() Option {
+	return func(f *flagx) { f.required = true }
 }
