@@ -99,7 +99,11 @@ func WriteFlags(w io.Writer) {
 // Lookup a flag by name. the second return value is the real flag pointer which is returned by flagx.NewXXX.
 // nil, nil will be returned if the flag is not found.
 func Lookup(name string) (*flag.Flag, any) {
-	return flag.Lookup(name), flags[name].target
+	f, ok := flags[name]
+	if !ok {
+		return nil, nil
+	}
+	return flag.Lookup(name), f.target
 }
 
 // Visit the flags name and values set in command line
