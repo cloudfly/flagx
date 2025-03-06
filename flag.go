@@ -37,9 +37,11 @@ func (f *flagx) usage(name string, value any, description string) string {
 	if f.required {
 		usage += " (required)"
 	}
-	if value != nil {
-		usage += fmt.Sprintf(" (default: %v)", value)
-	}
+	/*
+		if value != nil {
+			usage += fmt.Sprintf(" (default: %v)", value)
+		}
+	*/
 	return usage
 }
 
@@ -141,6 +143,7 @@ func Parse() {
 
 // ParseFlagSet parses the given args into the given fs.
 func ParseFlagSet(fs *flag.FlagSet, args []string) {
+	fs.Usage = func() { Usage(fmt.Sprintf("Usage of %s:", os.Args[0])) }
 	if err := fs.Parse(args); err != nil {
 		log.Fatalf("cannot parse flags %q: %s", args, err)
 	}
