@@ -175,6 +175,9 @@ func ParseFlagSet(fs *flag.FlagSet, args []string) {
 }
 
 func getEnvFlagName(s string) string {
+	if f, ok := flags[s]; ok && f.env != "" {
+		return f.env
+	}
 	// Substitute dots with underscores, since env var names cannot contain dots.
 	// See https://github.com/VictoriaMetrics/VictoriaMetrics/issues/311#issuecomment-586354129 for details.
 	return strings.ToUpper(*envPrefix + strings.ReplaceAll(s, ".", "_"))
@@ -183,7 +186,7 @@ func getEnvFlagName(s string) string {
 // Option for flags
 type Option func(*flagx)
 
-// Env disable flagx from reading environment variable for flag.
+// Env customize environment for flag.
 func Env(env string) Option {
 	return func(f *flagx) { f.env = env }
 }
