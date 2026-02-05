@@ -15,16 +15,10 @@ var (
 )
 
 type flagx struct {
+	name     string
 	target   any
 	env      string
 	required bool
-}
-
-func (f *flagx) apply(opts []Option) *flagx {
-	for _, opt := range opts {
-		opt(f)
-	}
-	return f
 }
 
 func (f *flagx) usage(name string, value any, description string) string {
@@ -46,7 +40,10 @@ func (f *flagx) usage(name string, value any, description string) string {
 }
 
 func newFlag(name string, opts []Option) *flagx {
-	x := (&flagx{}).apply(opts)
+	x := &flagx{name: name}
+	for _, opt := range opts {
+		opt(x)
+	}
 	flags[name] = x
 	return x
 }
@@ -194,4 +191,24 @@ func Env(env string) Option {
 // Required mark the flag MUST BE set via command line or environment
 func Required() Option {
 	return func(f *flagx) { f.required = true }
+}
+
+// Secret mark the flag is secret, the real value of it will be hidden when you call Visit and VisitAll
+// the flag name with "pass", "key", "secret" or "token" will be marked as secret by default.
+//
+// You can also check if a flag is secret by calling IsSecretFlag(flagName).
+func Secret() Option {
+	return func(f *flagx) {
+		secretFlags[f.name] = true
+	}
+}
+
+var secretFlags = make(map[string]bool)
+
+// IsSecretFlag returns true of s contains flag name with secret value, which shouldn't be exposed.
+func IsSecretFlag(s string) bool {
+	if strings.Contains(s, "pass") || strings.Contains(s, "key") || strings.Contains(s, "secret") || strings.Contains(s, "token") {
+		return true
+	}
+	return secretFlags[s]
 }
