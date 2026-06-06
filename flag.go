@@ -10,81 +10,49 @@ import (
 )
 
 var (
-	envPrefix = flag.String("env.prefix", "", "Name prefix of environment variables that interact with flags.")
-	flags     = map[string]*flagx{}
+	envPrefix       = flag.String("env.prefix", "", "Name prefix of environment variables that interact with flags.")
+	options         = map[string]*option{}
+	funcsAfterParse []*funcAfterParse
 )
 
-type flagx struct {
-	name     string
-	target   any
-	env      string
-	required bool
-}
-
-func (f *flagx) usage(name string, value any, description string) string {
-	usage := description
-	if f.env != "" {
-		usage += fmt.Sprintf(" (env: %s)", f.env)
-	} else {
-		usage += fmt.Sprintf(" (env: %s)", getEnvFlagName(name))
-	}
-	if f.required {
-		usage += " (required)"
-	}
-	/*
-		if value != nil {
-			usage += fmt.Sprintf(" (default: %v)", value)
-		}
-	*/
-	return usage
-}
-
-func newFlag(name string, opts []Option) *flagx {
-	x := &flagx{name: name}
-	for _, opt := range opts {
-		opt(x)
-	}
-	flags[name] = x
+func newFlag(name string, opts []Option) *option {
+	x := (&option{name: name}).apply(opts)
+	options[name] = x
 	return x
 }
 
 // NewBool creates a new bool flag.
 func NewBool(name string, value bool, usage string, opts ...Option) *bool {
 	x := newFlag(name, opts)
-	b := flag.Bool(name, value, x.usage(name, value, usage))
-	x.target = b
+	b := flag.Bool(name, value, x.usage(name, usage))
 	return b
 }
 
 // NewString creates a new string flag.
 func NewString(name string, value string, usage string, opts ...Option) *string {
 	x := newFlag(name, opts)
-	s := flag.String(name, value, x.usage(name, value, usage))
-	x.target = s
+	s := flag.String(name, value, x.usage(name, usage))
 	return s
 }
 
 // NewInt creates a new int flag.
 func NewInt(name string, value int, usage string, opts ...Option) *int {
 	x := newFlag(name, opts)
-	i := flag.Int(name, value, x.usage(name, value, usage))
-	x.target = i
+	i := flag.Int(name, value, x.usage(name, usage))
 	return i
 }
 
 // NewInt64 creates a new int64 flag.
 func NewInt64(name string, value int64, usage string, opts ...Option) *int64 {
 	x := newFlag(name, opts)
-	i64 := flag.Int64(name, value, x.usage(name, value, usage))
-	x.target = i64
+	i64 := flag.Int64(name, value, x.usage(name, usage))
 	return i64
 }
 
 // NewFloat creates a new float64 flag.
 func NewFloat(name string, value float64, usage string, opts ...Option) *float64 {
 	x := newFlag(name, opts)
-	f := flag.Float64(name, value, x.usage(name, value, usage))
-	x.target = f
+	f := flag.Float64(name, value, x.usage(name, usage))
 	return f
 }
 
@@ -95,23 +63,13 @@ func WriteFlags(w io.Writer) {
 	})
 }
 
-// Lookup a flag by name. the second return value is the real flag pointer which is returned by flagx.NewXXX.
-// nil, nil will be returned if the flag is not found.
-func Lookup(name string) (*flag.Flag, any) {
-	f, ok := flags[name]
-	if !ok {
-		return nil, nil
-	}
-	return flag.Lookup(name), f.target
-}
-
 // Visit the flags name and values set in command line
 func Visit(fn func(string, string)) {
 	flag.Visit(func(f *flag.Flag) {
 		lname := strings.ToLower(f.Name)
 		value := f.Value.String()
 		if IsSecretFlag(lname) {
-			value = "secret"
+			value = toSecret(value)
 		}
 		fn(lname, value)
 	})
@@ -123,7 +81,7 @@ func VisitAll(fn func(string, string)) {
 		lname := strings.ToLower(f.Name)
 		value := f.Value.String()
 		if IsSecretFlag(lname) {
-			value = "secret"
+			value = toSecret(value)
 		}
 		fn(lname, value)
 	})
@@ -158,57 +116,111 @@ func ParseFlagSet(fs *flag.FlagSet, args []string) {
 			return
 		}
 		// Get flag value from environment var.
-		fname := getEnvFlagName(f.Name)
-		if v := os.Getenv(fname); v != "" {
-			if err := fs.Set(f.Name, v); err != nil {
-				// Do not use lib/logger here, since it is uninitialized yet.
-				log.Fatalf("cannot set flag %s to %q, which is read from env var %q: %s", f.Name, v, fname, err)
+		ok, err := setFlagFromEnv(f)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, err.Error())
+			os.Exit(1)
+		}
+		if ok {
+			flagsSet[f.Name] = true
+		}
+	})
+
+	for _, fap := range funcsAfterParse {
+		fap.fn(flagsSet[fap.flagName], func(value string) error {
+			if value == "" {
+				return nil
 			}
-		} else if fx, ok := flags[f.Name]; ok && fx.required {
-			fmt.Fprintf(os.Stderr, "argument %q is required, run command with --%s or set via %s environment variable\n", f.Name, f.Name, getEnvFlagName(f.Name))
+			flagsSet[fap.flagName] = true
+			return fs.Set(fap.flagName, value)
+		})
+	}
+
+	// Check if any required flag is not set.
+	fs.VisitAll(func(f *flag.Flag) {
+		if flagsSet[f.Name] {
+			// The flag is explicitly set via command-line or environment or followed flag.
+			return
+		}
+
+		if fx, ok := options[f.Name]; ok && fx.required {
+			fmt.Fprintf(os.Stderr, "argument %q is required, run command with --%s or set via %s environment variable\n", f.Name, f.Name, FlagEnvName(f.Name))
 			os.Exit(1)
 		}
 	})
 }
 
-func getEnvFlagName(s string) string {
-	if f, ok := flags[s]; ok && f.env != "" {
-		return f.env
+func setFlagFromEnv(f *flag.Flag) (bool, error) {
+	fx, ok := options[f.Name]
+	if !ok {
+		return false, nil
 	}
-	// Substitute dots with underscores, since env var names cannot contain dots.
-	// See https://github.com/VictoriaMetrics/VictoriaMetrics/issues/311#issuecomment-586354129 for details.
-	return strings.ToUpper(*envPrefix + strings.ReplaceAll(s, ".", "_"))
+
+	envNames := append([]string{FlagEnvName(f.Name)}, fx.envs...)
+
+	for _, envName := range envNames {
+		if v := os.Getenv(envName); v != "" {
+			if err := f.Value.Set(v); err != nil {
+				return false, fmt.Errorf("cannot set flag %s to %q, which is read from env var %q: %s", f.Name, v, envName, err)
+			}
+			return true, nil
+		}
+	}
+
+	return false, nil
+}
+
+func FlagEnvName(name string) string {
+	return strings.ToUpper(*envPrefix + strings.ReplaceAll(name, ".", "_"))
 }
 
 // Option for flags
-type Option func(*flagx)
+type Option func(*option)
+
+type option struct {
+	name     string
+	required bool
+	envs     []string
+	isSet    bool
+}
+
+func (f *option) apply(opts []Option) *option {
+	for _, opt := range opts {
+		opt(f)
+	}
+	return f
+}
+
+func (f *option) usage(name string, description string) string {
+	usage := description
+	if len(f.envs) > 0 {
+		usage += fmt.Sprintf(" (env: %s)", strings.Join(f.envs, ", "))
+	} else {
+		usage += fmt.Sprintf(" (env: %s)", FlagEnvName(name))
+	}
+	if f.required {
+		usage += " (required)"
+	}
+	return usage
+}
 
 // Env customize environment for flag.
 func Env(env string) Option {
-	return func(f *flagx) { f.env = env }
+	return func(f *option) { f.envs = append(f.envs, env) }
 }
 
 // Required mark the flag MUST BE set via command line or environment
 func Required() Option {
-	return func(f *flagx) { f.required = true }
+	return func(f *option) { f.required = true }
 }
 
-// Secret mark the flag is secret, the real value of it will be hidden when you call Visit and VisitAll
-// the flag name with "pass", "key", "secret" or "token" will be marked as secret by default.
-//
-// You can also check if a flag is secret by calling IsSecretFlag(flagName).
-func Secret() Option {
-	return func(f *flagx) {
-		secretFlags[f.name] = true
-	}
+// AfterParse set a function to be called after parsing flags.
+// The function must not block.
+func AfterParse(f func(isSet bool, set func(string) error)) Option {
+	return func(o *option) { funcsAfterParse = append(funcsAfterParse, &funcAfterParse{flagName: o.name, fn: f}) }
 }
 
-var secretFlags = make(map[string]bool)
-
-// IsSecretFlag returns true of s contains flag name with secret value, which shouldn't be exposed.
-func IsSecretFlag(s string) bool {
-	if strings.Contains(s, "pass") || strings.Contains(s, "key") || strings.Contains(s, "secret") || strings.Contains(s, "token") {
-		return true
-	}
-	return secretFlags[s]
+type funcAfterParse struct {
+	flagName string
+	fn       func(isSet bool, set func(string) error)
 }

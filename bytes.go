@@ -11,13 +11,12 @@ import (
 // NewBytes returns new `bytes` flag with the given name, defaultValue and description.
 func NewBytes(name string, defaultValue int64, usage string, opts ...Option) *Bytes {
 	x := newFlag(name, opts)
-	usage = x.usage(name, defaultValue, usage) + "\nSupports the following optional suffixes for `size` values: KB, MB, GB, TB, KiB, MiB, GiB, TiB."
+	usage = x.usage(name, usage) + "\nSupports the following optional suffixes for `size` values: KB, MB, GB, TB, KiB, MiB, GiB, TiB."
 	b := Bytes{
 		N:           defaultValue,
 		valueString: fmt.Sprintf("%d", defaultValue),
 	}
 	flag.Var(&b, name, usage)
-	x.target = &b
 	return &b
 }
 

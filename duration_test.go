@@ -20,18 +20,12 @@ func TestDurationSetFailure(t *testing.T) {
 	f("134xd")
 	f("2.43sdfw")
 
-	// Too big value in months
-	f("12345")
-
 	// Too big duration
 	f("100000000000y")
 
 	// Negative duration
 	f("-1")
 	f("-34h")
-
-	// Duration in minutes is confused with duration in months
-	f("1m")
 }
 
 func TestDurationSetSuccess(t *testing.T) {

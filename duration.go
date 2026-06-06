@@ -14,13 +14,12 @@ import (
 // DefaultValue is in months.
 func NewDuration(name string, defaultValue string, usage string, opts ...Option) *Duration {
 	x := newFlag(name, opts)
-	usage = x.usage(name, defaultValue, usage) + "\nThe following optional suffixes are supported: h (hour), d (day), w (week), m (month), y (year). If suffix isn't set, then the duration is counted in seconds."
+	usage = x.usage(name, usage) + "\nThe following optional suffixes are supported: h (hour), d (day), w (week), m (month), y (year). If suffix isn't set, then the duration is counted in seconds."
 	d := &Duration{}
 	if err := d.Set(defaultValue); err != nil {
 		panic(fmt.Sprintf("BUG: can not parse default value %s for flag %s", defaultValue, name))
 	}
 	flag.Var(d, name, usage)
-	x.target = d
 	return d
 }
 

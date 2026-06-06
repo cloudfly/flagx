@@ -27,10 +27,9 @@ func (t *Text) UnmarshalText(text []byte) error {
 
 // NewText creates a new text flag.
 func NewText(name string, value string, usage string, opts ...Option) *Text {
-	x := newFlag(name, opts)
 	t := Text{Value: value}
-	x.target = &t
+	x := (&option{}).apply(opts)
 	usage += "\nThe flag value shoud be a base64-encoded string, it will be decoded before assignment"
-	flag.TextVar(&t, name, &t, x.usage(name, value, usage))
+	flag.TextVar(&t, name, &t, x.usage(name, usage))
 	return &t
 }
