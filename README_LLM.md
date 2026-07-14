@@ -20,7 +20,7 @@
 
 ```go
 import (
-	"github.com/chenyunfei/flagx"
+	"github.com/cloudfly/flagx"
 )
 
 var (
