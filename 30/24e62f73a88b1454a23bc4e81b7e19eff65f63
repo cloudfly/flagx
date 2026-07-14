@@ -1,0 +1,1493 @@
+README.md
+  s_d0752ecaf55437::t_fc9ae40b92c377 3,5,7-15,21,29-32,37,41,44,47,50,54,56,59-60,62-63,65-67,69-70,75,77,80-82,85,88,93,95-104,107-108,111,114-115,120,123,126,129,133,136,138,140-141,143,146-147,149-150,152-153,155-156,158-159,161-162,165,172,178,180,182,185-186,188-189,191-192,199,201,204,207,209,212,214,220,222,224,226-227,229,233,235,241,245,247,249,251,253,259,261,265,273,277-278,284,289,297,305,311-313,324-327,330,333,335-336,338-339 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a55f705ce7b75df30c3c648","tool_type":"agent","tool_id":"Write","line_ranges":[{"Single":3},{"Single":5},{"Range":[7,15]},{"Single":21},{"Range":[29,32]},{"Single":37},{"Single":41},{"Single":44},{"Single":47},{"Single":50},{"Single":54},{"Single":56},{"Range":[59,60]},{"Range":[62,63]},{"Range":[65,67]},{"Range":[69,70]},{"Single":75},{"Single":77},{"Range":[80,82]},{"Single":85},{"Single":88},{"Single":93},{"Range":[95,104]},{"Range":[107,108]},{"Single":111},{"Range":[114,115]},{"Single":120},{"Single":123},{"Single":126},{"Single":129},{"Single":133},{"Single":136},{"Single":138},{"Range":[140,141]},{"Single":143},{"Range":[146,147]},{"Range":[149,150]},{"Range":[152,153]},{"Range":[155,156]},{"Range":[158,159]},{"Range":[161,162]},{"Single":165},{"Single":172},{"Single":178},{"Single":180},{"Single":182},{"Range":[185,186]},{"Range":[188,189]},{"Range":[191,192]},{"Single":199},{"Single":201},{"Single":204},{"Single":207},{"Single":209},{"Single":212},{"Single":214},{"Single":220},{"Single":222},{"Single":224},{"Range":[226,227]},{"Single":229},{"Single":233},{"Single":235},{"Single":241},{"Single":245},{"Single":247},{"Single":249},{"Single":251},{"Single":253},{"Single":259},{"Single":261},{"Single":265},{"Single":273},{"Range":[277,278]},{"Single":284},{"Single":289},{"Single":297},{"Single":305},{"Range":[311,313]},{"Range":[324,327]},{"Single":330},{"Single":333},{"Range":[335,336]},{"Range":[338,339]}]}]}
+  s_d0752ecaf55437::t_ba10c45a17eff5 16-20,22-28,33-36,38-40,42-43,45-46,48-49,51-53,55,61,64,68,71-74,76,78-79,83-84,86-87,89-92,94,105-106,109-110,112-113,116-119,121-122,124-125,127-128,130-132,134-135,137,139,142,144-145,148,151,154,157,160,163-164,166-171,173,184,187,190,193-198,200,202-203,205-206,208,210-211,213,215-219,221,223,228,230-232,234,236-238,242-244,246,248,250,252,254,256-258,260,263-264,266-272,274-276,279-283,285-288,290-295,299-303,307-310,314-323,328-329,332,334,337,340-352 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a55f055ce7b75df30c3c626","tool_type":"agent","tool_id":"Write","line_ranges":[{"Range":[16,20]},{"Range":[22,28]},{"Range":[33,36]},{"Range":[38,40]},{"Range":[42,43]},{"Range":[45,46]},{"Range":[48,49]},{"Range":[51,53]},{"Single":55},{"Single":61},{"Single":64},{"Single":68},{"Range":[71,74]},{"Single":76},{"Range":[78,79]},{"Range":[83,84]},{"Range":[86,87]},{"Range":[89,92]},{"Single":94},{"Range":[105,106]},{"Range":[109,110]},{"Range":[112,113]},{"Range":[116,119]},{"Range":[121,122]},{"Range":[124,125]},{"Range":[127,128]},{"Range":[130,132]},{"Range":[134,135]},{"Single":137},{"Single":139},{"Single":142},{"Range":[144,145]},{"Single":148},{"Single":151},{"Single":154},{"Single":157},{"Single":160},{"Range":[163,164]},{"Range":[166,171]},{"Single":173},{"Single":184},{"Single":187},{"Single":190},{"Range":[193,198]},{"Single":200},{"Range":[202,203]},{"Range":[205,206]},{"Single":208},{"Range":[210,211]},{"Single":213},{"Range":[215,219]},{"Single":221},{"Single":223},{"Single":228},{"Range":[230,232]},{"Single":234},{"Range":[236,238]},{"Range":[242,244]},{"Single":246},{"Single":248},{"Single":250},{"Single":252},{"Single":254},{"Range":[256,258]},{"Single":260},{"Range":[263,264]},{"Range":[266,272]},{"Range":[274,276]},{"Range":[279,283]},{"Range":[285,288]},{"Range":[290,295]},{"Range":[299,303]},{"Range":[307,310]},{"Range":[314,323]},{"Range":[328,329]},{"Single":332},{"Single":334},{"Single":337},{"Range":[340,352]}]}]}
+  s_d0752ecaf55437::t_9d1b2d7d24487f 296
+  s_d0752ecaf55437::t_068cf36d779c6d 298
+  s_d0752ecaf55437::t_38c53289bff07a 304
+  s_d0752ecaf55437::t_1cdbf29c4d723f 306
+  s_d0752ecaf55437::t_5c2d2af4654c39 331
+README_LLM.md
+  h_3d2cfab65814bf 23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "3024e62f73a88b1454a23bc4e81b7e19eff65f63",
+  "prompts": {},
+  "humans": {
+    "h_3d2cfab65814bf": {
+      "author": "cloudfly <chenyunfei.cs@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_d0752ecaf55437": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a55ef77ce7b75df30c3c5f4",
+        "model": "Doubao-Seed-2.1-Turbo__dev"
+      },
+      "human_author": "cloudfly <chenyunfei.cs@gmail.com>"
+    }
+  },
+  "attestation_metadata": {
+    "README.md": [
+      {
+        "hash": "s_d0752ecaf55437::t_fc9ae40b92c377",
+        "line_ranges": [
+          {
+            "Single": 3
+          },
+          {
+            "Single": 5
+          },
+          {
+            "Range": [
+              7,
+              15
+            ]
+          },
+          {
+            "Single": 21
+          },
+          {
+            "Range": [
+              29,
+              32
+            ]
+          },
+          {
+            "Single": 37
+          },
+          {
+            "Single": 41
+          },
+          {
+            "Single": 44
+          },
+          {
+            "Single": 47
+          },
+          {
+            "Single": 50
+          },
+          {
+            "Single": 54
+          },
+          {
+            "Single": 56
+          },
+          {
+            "Range": [
+              59,
+              60
+            ]
+          },
+          {
+            "Range": [
+              62,
+              63
+            ]
+          },
+          {
+            "Range": [
+              65,
+              67
+            ]
+          },
+          {
+            "Range": [
+              69,
+              70
+            ]
+          },
+          {
+            "Single": 75
+          },
+          {
+            "Single": 77
+          },
+          {
+            "Range": [
+              80,
+              82
+            ]
+          },
+          {
+            "Single": 85
+          },
+          {
+            "Single": 88
+          },
+          {
+            "Single": 93
+          },
+          {
+            "Range": [
+              95,
+              104
+            ]
+          },
+          {
+            "Range": [
+              107,
+              108
+            ]
+          },
+          {
+            "Single": 111
+          },
+          {
+            "Range": [
+              114,
+              115
+            ]
+          },
+          {
+            "Single": 120
+          },
+          {
+            "Single": 123
+          },
+          {
+            "Single": 126
+          },
+          {
+            "Single": 129
+          },
+          {
+            "Single": 133
+          },
+          {
+            "Single": 136
+          },
+          {
+            "Single": 138
+          },
+          {
+            "Range": [
+              140,
+              141
+            ]
+          },
+          {
+            "Single": 143
+          },
+          {
+            "Range": [
+              146,
+              147
+            ]
+          },
+          {
+            "Range": [
+              149,
+              150
+            ]
+          },
+          {
+            "Range": [
+              152,
+              153
+            ]
+          },
+          {
+            "Range": [
+              155,
+              156
+            ]
+          },
+          {
+            "Range": [
+              158,
+              159
+            ]
+          },
+          {
+            "Range": [
+              161,
+              162
+            ]
+          },
+          {
+            "Single": 165
+          },
+          {
+            "Single": 172
+          },
+          {
+            "Single": 178
+          },
+          {
+            "Single": 180
+          },
+          {
+            "Single": 182
+          },
+          {
+            "Range": [
+              185,
+              186
+            ]
+          },
+          {
+            "Range": [
+              188,
+              189
+            ]
+          },
+          {
+            "Range": [
+              191,
+              192
+            ]
+          },
+          {
+            "Single": 199
+          },
+          {
+            "Single": 201
+          },
+          {
+            "Single": 204
+          },
+          {
+            "Single": 207
+          },
+          {
+            "Single": 209
+          },
+          {
+            "Single": 212
+          },
+          {
+            "Single": 214
+          },
+          {
+            "Single": 220
+          },
+          {
+            "Single": 222
+          },
+          {
+            "Single": 224
+          },
+          {
+            "Range": [
+              226,
+              227
+            ]
+          },
+          {
+            "Single": 229
+          },
+          {
+            "Single": 233
+          },
+          {
+            "Single": 235
+          },
+          {
+            "Single": 241
+          },
+          {
+            "Single": 245
+          },
+          {
+            "Single": 247
+          },
+          {
+            "Single": 249
+          },
+          {
+            "Single": 251
+          },
+          {
+            "Single": 253
+          },
+          {
+            "Single": 259
+          },
+          {
+            "Single": 261
+          },
+          {
+            "Single": 265
+          },
+          {
+            "Single": 273
+          },
+          {
+            "Range": [
+              277,
+              278
+            ]
+          },
+          {
+            "Single": 284
+          },
+          {
+            "Single": 289
+          },
+          {
+            "Single": 297
+          },
+          {
+            "Single": 305
+          },
+          {
+            "Range": [
+              311,
+              313
+            ]
+          },
+          {
+            "Range": [
+              324,
+              327
+            ]
+          },
+          {
+            "Single": 330
+          },
+          {
+            "Single": 333
+          },
+          {
+            "Range": [
+              335,
+              336
+            ]
+          },
+          {
+            "Range": [
+              338,
+              339
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a55f705ce7b75df30c3c648",
+            "tool_type": "agent",
+            "tool_id": "Write",
+            "line_ranges": [
+              {
+                "Single": 3
+              },
+              {
+                "Single": 5
+              },
+              {
+                "Range": [
+                  7,
+                  15
+                ]
+              },
+              {
+                "Single": 21
+              },
+              {
+                "Range": [
+                  29,
+                  32
+                ]
+              },
+              {
+                "Single": 37
+              },
+              {
+                "Single": 41
+              },
+              {
+                "Single": 44
+              },
+              {
+                "Single": 47
+              },
+              {
+                "Single": 50
+              },
+              {
+                "Single": 54
+              },
+              {
+                "Single": 56
+              },
+              {
+                "Range": [
+                  59,
+                  60
+                ]
+              },
+              {
+                "Range": [
+                  62,
+                  63
+                ]
+              },
+              {
+                "Range": [
+                  65,
+                  67
+                ]
+              },
+              {
+                "Range": [
+                  69,
+                  70
+                ]
+              },
+              {
+                "Single": 75
+              },
+              {
+                "Single": 77
+              },
+              {
+                "Range": [
+                  80,
+                  82
+                ]
+              },
+              {
+                "Single": 85
+              },
+              {
+                "Single": 88
+              },
+              {
+                "Single": 93
+              },
+              {
+                "Range": [
+                  95,
+                  104
+                ]
+              },
+              {
+                "Range": [
+                  107,
+                  108
+                ]
+              },
+              {
+                "Single": 111
+              },
+              {
+                "Range": [
+                  114,
+                  115
+                ]
+              },
+              {
+                "Single": 120
+              },
+              {
+                "Single": 123
+              },
+              {
+                "Single": 126
+              },
+              {
+                "Single": 129
+              },
+              {
+                "Single": 133
+              },
+              {
+                "Single": 136
+              },
+              {
+                "Single": 138
+              },
+              {
+                "Range": [
+                  140,
+                  141
+                ]
+              },
+              {
+                "Single": 143
+              },
+              {
+                "Range": [
+                  146,
+                  147
+                ]
+              },
+              {
+                "Range": [
+                  149,
+                  150
+                ]
+              },
+              {
+                "Range": [
+                  152,
+                  153
+                ]
+              },
+              {
+                "Range": [
+                  155,
+                  156
+                ]
+              },
+              {
+                "Range": [
+                  158,
+                  159
+                ]
+              },
+              {
+                "Range": [
+                  161,
+                  162
+                ]
+              },
+              {
+                "Single": 165
+              },
+              {
+                "Single": 172
+              },
+              {
+                "Single": 178
+              },
+              {
+                "Single": 180
+              },
+              {
+                "Single": 182
+              },
+              {
+                "Range": [
+                  185,
+                  186
+                ]
+              },
+              {
+                "Range": [
+                  188,
+                  189
+                ]
+              },
+              {
+                "Range": [
+                  191,
+                  192
+                ]
+              },
+              {
+                "Single": 199
+              },
+              {
+                "Single": 201
+              },
+              {
+                "Single": 204
+              },
+              {
+                "Single": 207
+              },
+              {
+                "Single": 209
+              },
+              {
+                "Single": 212
+              },
+              {
+                "Single": 214
+              },
+              {
+                "Single": 220
+              },
+              {
+                "Single": 222
+              },
+              {
+                "Single": 224
+              },
+              {
+                "Range": [
+                  226,
+                  227
+                ]
+              },
+              {
+                "Single": 229
+              },
+              {
+                "Single": 233
+              },
+              {
+                "Single": 235
+              },
+              {
+                "Single": 241
+              },
+              {
+                "Single": 245
+              },
+              {
+                "Single": 247
+              },
+              {
+                "Single": 249
+              },
+              {
+                "Single": 251
+              },
+              {
+                "Single": 253
+              },
+              {
+                "Single": 259
+              },
+              {
+                "Single": 261
+              },
+              {
+                "Single": 265
+              },
+              {
+                "Single": 273
+              },
+              {
+                "Range": [
+                  277,
+                  278
+                ]
+              },
+              {
+                "Single": 284
+              },
+              {
+                "Single": 289
+              },
+              {
+                "Single": 297
+              },
+              {
+                "Single": 305
+              },
+              {
+                "Range": [
+                  311,
+                  313
+                ]
+              },
+              {
+                "Range": [
+                  324,
+                  327
+                ]
+              },
+              {
+                "Single": 330
+              },
+              {
+                "Single": 333
+              },
+              {
+                "Range": [
+                  335,
+                  336
+                ]
+              },
+              {
+                "Range": [
+                  338,
+                  339
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hash": "s_d0752ecaf55437::t_ba10c45a17eff5",
+        "line_ranges": [
+          {
+            "Range": [
+              16,
+              20
+            ]
+          },
+          {
+            "Range": [
+              22,
+              28
+            ]
+          },
+          {
+            "Range": [
+              33,
+              36
+            ]
+          },
+          {
+            "Range": [
+              38,
+              40
+            ]
+          },
+          {
+            "Range": [
+              42,
+              43
+            ]
+          },
+          {
+            "Range": [
+              45,
+              46
+            ]
+          },
+          {
+            "Range": [
+              48,
+              49
+            ]
+          },
+          {
+            "Range": [
+              51,
+              53
+            ]
+          },
+          {
+            "Single": 55
+          },
+          {
+            "Single": 61
+          },
+          {
+            "Single": 64
+          },
+          {
+            "Single": 68
+          },
+          {
+            "Range": [
+              71,
+              74
+            ]
+          },
+          {
+            "Single": 76
+          },
+          {
+            "Range": [
+              78,
+              79
+            ]
+          },
+          {
+            "Range": [
+              83,
+              84
+            ]
+          },
+          {
+            "Range": [
+              86,
+              87
+            ]
+          },
+          {
+            "Range": [
+              89,
+              92
+            ]
+          },
+          {
+            "Single": 94
+          },
+          {
+            "Range": [
+              105,
+              106
+            ]
+          },
+          {
+            "Range": [
+              109,
+              110
+            ]
+          },
+          {
+            "Range": [
+              112,
+              113
+            ]
+          },
+          {
+            "Range": [
+              116,
+              119
+            ]
+          },
+          {
+            "Range": [
+              121,
+              122
+            ]
+          },
+          {
+            "Range": [
+              124,
+              125
+            ]
+          },
+          {
+            "Range": [
+              127,
+              128
+            ]
+          },
+          {
+            "Range": [
+              130,
+              132
+            ]
+          },
+          {
+            "Range": [
+              134,
+              135
+            ]
+          },
+          {
+            "Single": 137
+          },
+          {
+            "Single": 139
+          },
+          {
+            "Single": 142
+          },
+          {
+            "Range": [
+              144,
+              145
+            ]
+          },
+          {
+            "Single": 148
+          },
+          {
+            "Single": 151
+          },
+          {
+            "Single": 154
+          },
+          {
+            "Single": 157
+          },
+          {
+            "Single": 160
+          },
+          {
+            "Range": [
+              163,
+              164
+            ]
+          },
+          {
+            "Range": [
+              166,
+              171
+            ]
+          },
+          {
+            "Single": 173
+          },
+          {
+            "Single": 184
+          },
+          {
+            "Single": 187
+          },
+          {
+            "Single": 190
+          },
+          {
+            "Range": [
+              193,
+              198
+            ]
+          },
+          {
+            "Single": 200
+          },
+          {
+            "Range": [
+              202,
+              203
+            ]
+          },
+          {
+            "Range": [
+              205,
+              206
+            ]
+          },
+          {
+            "Single": 208
+          },
+          {
+            "Range": [
+              210,
+              211
+            ]
+          },
+          {
+            "Single": 213
+          },
+          {
+            "Range": [
+              215,
+              219
+            ]
+          },
+          {
+            "Single": 221
+          },
+          {
+            "Single": 223
+          },
+          {
+            "Single": 228
+          },
+          {
+            "Range": [
+              230,
+              232
+            ]
+          },
+          {
+            "Single": 234
+          },
+          {
+            "Range": [
+              236,
+              238
+            ]
+          },
+          {
+            "Range": [
+              242,
+              244
+            ]
+          },
+          {
+            "Single": 246
+          },
+          {
+            "Single": 248
+          },
+          {
+            "Single": 250
+          },
+          {
+            "Single": 252
+          },
+          {
+            "Single": 254
+          },
+          {
+            "Range": [
+              256,
+              258
+            ]
+          },
+          {
+            "Single": 260
+          },
+          {
+            "Range": [
+              263,
+              264
+            ]
+          },
+          {
+            "Range": [
+              266,
+              272
+            ]
+          },
+          {
+            "Range": [
+              274,
+              276
+            ]
+          },
+          {
+            "Range": [
+              279,
+              283
+            ]
+          },
+          {
+            "Range": [
+              285,
+              288
+            ]
+          },
+          {
+            "Range": [
+              290,
+              295
+            ]
+          },
+          {
+            "Range": [
+              299,
+              303
+            ]
+          },
+          {
+            "Range": [
+              307,
+              310
+            ]
+          },
+          {
+            "Range": [
+              314,
+              323
+            ]
+          },
+          {
+            "Range": [
+              328,
+              329
+            ]
+          },
+          {
+            "Single": 332
+          },
+          {
+            "Single": 334
+          },
+          {
+            "Single": 337
+          },
+          {
+            "Range": [
+              340,
+              352
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a55f055ce7b75df30c3c626",
+            "tool_type": "agent",
+            "tool_id": "Write",
+            "line_ranges": [
+              {
+                "Range": [
+                  16,
+                  20
+                ]
+              },
+              {
+                "Range": [
+                  22,
+                  28
+                ]
+              },
+              {
+                "Range": [
+                  33,
+                  36
+                ]
+              },
+              {
+                "Range": [
+                  38,
+                  40
+                ]
+              },
+              {
+                "Range": [
+                  42,
+                  43
+                ]
+              },
+              {
+                "Range": [
+                  45,
+                  46
+                ]
+              },
+              {
+                "Range": [
+                  48,
+                  49
+                ]
+              },
+              {
+                "Range": [
+                  51,
+                  53
+                ]
+              },
+              {
+                "Single": 55
+              },
+              {
+                "Single": 61
+              },
+              {
+                "Single": 64
+              },
+              {
+                "Single": 68
+              },
+              {
+                "Range": [
+                  71,
+                  74
+                ]
+              },
+              {
+                "Single": 76
+              },
+              {
+                "Range": [
+                  78,
+                  79
+                ]
+              },
+              {
+                "Range": [
+                  83,
+                  84
+                ]
+              },
+              {
+                "Range": [
+                  86,
+                  87
+                ]
+              },
+              {
+                "Range": [
+                  89,
+                  92
+                ]
+              },
+              {
+                "Single": 94
+              },
+              {
+                "Range": [
+                  105,
+                  106
+                ]
+              },
+              {
+                "Range": [
+                  109,
+                  110
+                ]
+              },
+              {
+                "Range": [
+                  112,
+                  113
+                ]
+              },
+              {
+                "Range": [
+                  116,
+                  119
+                ]
+              },
+              {
+                "Range": [
+                  121,
+                  122
+                ]
+              },
+              {
+                "Range": [
+                  124,
+                  125
+                ]
+              },
+              {
+                "Range": [
+                  127,
+                  128
+                ]
+              },
+              {
+                "Range": [
+                  130,
+                  132
+                ]
+              },
+              {
+                "Range": [
+                  134,
+                  135
+                ]
+              },
+              {
+                "Single": 137
+              },
+              {
+                "Single": 139
+              },
+              {
+                "Single": 142
+              },
+              {
+                "Range": [
+                  144,
+                  145
+                ]
+              },
+              {
+                "Single": 148
+              },
+              {
+                "Single": 151
+              },
+              {
+                "Single": 154
+              },
+              {
+                "Single": 157
+              },
+              {
+                "Single": 160
+              },
+              {
+                "Range": [
+                  163,
+                  164
+                ]
+              },
+              {
+                "Range": [
+                  166,
+                  171
+                ]
+              },
+              {
+                "Single": 173
+              },
+              {
+                "Single": 184
+              },
+              {
+                "Single": 187
+              },
+              {
+                "Single": 190
+              },
+              {
+                "Range": [
+                  193,
+                  198
+                ]
+              },
+              {
+                "Single": 200
+              },
+              {
+                "Range": [
+                  202,
+                  203
+                ]
+              },
+              {
+                "Range": [
+                  205,
+                  206
+                ]
+              },
+              {
+                "Single": 208
+              },
+              {
+                "Range": [
+                  210,
+                  211
+                ]
+              },
+              {
+                "Single": 213
+              },
+              {
+                "Range": [
+                  215,
+                  219
+                ]
+              },
+              {
+                "Single": 221
+              },
+              {
+                "Single": 223
+              },
+              {
+                "Single": 228
+              },
+              {
+                "Range": [
+                  230,
+                  232
+                ]
+              },
+              {
+                "Single": 234
+              },
+              {
+                "Range": [
+                  236,
+                  238
+                ]
+              },
+              {
+                "Range": [
+                  242,
+                  244
+                ]
+              },
+              {
+                "Single": 246
+              },
+              {
+                "Single": 248
+              },
+              {
+                "Single": 250
+              },
+              {
+                "Single": 252
+              },
+              {
+                "Single": 254
+              },
+              {
+                "Range": [
+                  256,
+                  258
+                ]
+              },
+              {
+                "Single": 260
+              },
+              {
+                "Range": [
+                  263,
+                  264
+                ]
+              },
+              {
+                "Range": [
+                  266,
+                  272
+                ]
+              },
+              {
+                "Range": [
+                  274,
+                  276
+                ]
+              },
+              {
+                "Range": [
+                  279,
+                  283
+                ]
+              },
+              {
+                "Range": [
+                  285,
+                  288
+                ]
+              },
+              {
+                "Range": [
+                  290,
+                  295
+                ]
+              },
+              {
+                "Range": [
+                  299,
+                  303
+                ]
+              },
+              {
+                "Range": [
+                  307,
+                  310
+                ]
+              },
+              {
+                "Range": [
+                  314,
+                  323
+                ]
+              },
+              {
+                "Range": [
+                  328,
+                  329
+                ]
+              },
+              {
+                "Single": 332
+              },
+              {
+                "Single": 334
+              },
+              {
+                "Single": 337
+              },
+              {
+                "Range": [
+                  340,
+                  352
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "remote_transcripts": {
+    "s_d0752ecaf55437": {
+      "tool": "trae",
+      "conversation_id": "6a55ef77ce7b75df30c3c5f4",
+      "session_id": "6a55ef77ce7b75df30c3c5f4",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_d0752ecaf55437::t_ba10c45a17eff5": {
+      "tool": "trae",
+      "conversation_id": "6a55ef77ce7b75df30c3c5f4",
+      "session_id": "6a55ef77ce7b75df30c3c5f4",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_d0752ecaf55437::t_fc9ae40b92c377": {
+      "tool": "trae",
+      "conversation_id": "6a55ef77ce7b75df30c3c5f4",
+      "session_id": "6a55ef77ce7b75df30c3c5f4",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    }
+  }
+}
