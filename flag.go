@@ -96,6 +96,57 @@ func Parse() {
 	ParseFlagSet(flag.CommandLine, os.Args[1:])
 }
 
+// ParseEnv parses environment vars(if env.prefix provided) and command-line flags.
+func ParseEnv() {
+	fs := flag.CommandLine
+
+	// Remember explicitly set command-line flags.
+	flagsSet := make(map[string]bool)
+	fs.Visit(func(f *flag.Flag) {
+		flagsSet[f.Name] = true
+	})
+
+	// Obtain the remaining flag values from environment vars.
+	fs.VisitAll(func(f *flag.Flag) {
+		if flagsSet[f.Name] {
+			// The flag is explicitly set via command-line.
+			return
+		}
+		// Get flag value from environment var.
+		ok, err := setFlagFromEnv(f)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, err.Error())
+			os.Exit(1)
+		}
+		if ok {
+			flagsSet[f.Name] = true
+		}
+	})
+
+	for _, fap := range funcsAfterParse {
+		fap.fn(flagsSet[fap.flagName], func(value string) error {
+			if value == "" {
+				return nil
+			}
+			flagsSet[fap.flagName] = true
+			return fs.Set(fap.flagName, value)
+		})
+	}
+
+	// Check if any required flag is not set.
+	fs.VisitAll(func(f *flag.Flag) {
+		if flagsSet[f.Name] {
+			// The flag is explicitly set via command-line or environment or followed flag.
+			return
+		}
+
+		if fx, ok := options[f.Name]; ok && fx.required {
+			fmt.Fprintf(os.Stderr, "argument %q is required, run command with --%s or set via %s environment variable\n", f.Name, f.Name, FlagEnvName(f.Name))
+			os.Exit(1)
+		}
+	})
+}
+
 // ParseFlagSet parses the given args into the given fs.
 func ParseFlagSet(fs *flag.FlagSet, args []string) {
 	fs.Usage = func() { Usage(fmt.Sprintf("Usage of %s:", os.Args[0])) }
