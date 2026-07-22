@@ -1,0 +1,16 @@
+flag.go
+  h_3d2cfab65814bf 99-149
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "bedf35a08f1594f5a57a4e65ebf3e7af75881722",
+  "prompts": {},
+  "humans": {
+    "h_3d2cfab65814bf": {
+      "author": "cloudfly <chenyunfei.cs@gmail.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
